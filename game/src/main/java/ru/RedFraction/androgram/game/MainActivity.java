@@ -128,15 +128,15 @@ public class MainActivity extends Activity {
         }
     } //Слушатель итемов меню
 
-    private void Enter(){
-        if(wordlist[select].toLowerCase().equals(et_textEnter.getText().toString().toLowerCase())){
+    private void Enter() {
+        if (wordlist[select].toLowerCase().equals(et_textEnter.getText().toString().toLowerCase())) {
             Toast.makeText(getApplicationContext(), "Отлично +1 очко", Toast.LENGTH_SHORT).show();
             tv_word.setText(anagram(wordlist).toLowerCase());
             points++;
             tv_points.setText(String.valueOf(points));
             word = "";
             et_textEnter.setText("");
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "Неудача -1 очко", Toast.LENGTH_SHORT).show();
             tv_word.setText(anagram(wordlist).toLowerCase());
             word = "";
@@ -157,7 +157,7 @@ public class MainActivity extends Activity {
         super.onResume();
 
         points = Prefs.loadScore(getApplicationContext());
-        Log.d("step", "2");
+        Log.d("step", "99");
         tv_points.setText(points + "");
         Log.d("step", "3");
         tv_word.setText(anagram(wordlist).toLowerCase());
