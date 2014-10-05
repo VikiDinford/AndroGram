@@ -3,7 +3,6 @@ package ru.RedFraction.androgram.game;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,7 @@ public class MainActivity extends Activity {
     private TextView tv_word;
     private Button   bt_enter;
     private TextView tv_points;
-    private TextView tv_words;
+
 
     // Начало метода с входным значением одномерного массива
     private static String anagram(String[] allWords) {
@@ -53,16 +52,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Cлушатель кнопки Enter
-        et_textEnter.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    Enter();
-                    return true;
-                }
-                return false;
-            }
-        });
+        tv_points = (TextView) findViewById(R.id.tv_points);
+        tv_word = (TextView) findViewById(R.id.tv_word);
+        et_textEnter = (EditText) findViewById(R.id.et_textEnter);
+        tv_word.setText(anagram(wordlist).toLowerCase());
 
         View.OnClickListener radioListener = new View.OnClickListener() {
             @Override
@@ -92,6 +85,11 @@ public class MainActivity extends Activity {
                         break;
 
                     default:
+                        break;
+                }
+                switch (v.getId()) {
+                    case R.id.bt_enter:
+                        Enter();
                         break;
                 }
             }
@@ -153,6 +151,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         //wordlist = Prefs.loadWordlist(getApplicationContext());
+        tv_points = (TextView) findViewById(R.id.tv_points);
         points = Prefs.loadScore(getApplicationContext());
         tv_points.setText(points + "");
     } //Загрузка
