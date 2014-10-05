@@ -3,6 +3,7 @@ package ru.RedFraction.androgram.game;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,7 @@ import java.util.Random;
 
 public class MainActivity extends Activity {
 
-    public static String[] wordlist = WordLists.RockGroups;
+    public static String[] wordlist = WordLists.Animes;
     private static String word;
     private static int select;
     private static int points = 0;
@@ -24,8 +25,8 @@ public class MainActivity extends Activity {
     //Элементы управления
     private EditText et_textEnter;
     private TextView tv_word;
-    private Button   bt_enter;
     private TextView tv_points;
+    private Button bt_enter;
 
 
     // Начало метода с входным значением одномерного массива
@@ -54,9 +55,10 @@ public class MainActivity extends Activity {
 
         tv_points = (TextView) findViewById(R.id.tv_points);
         tv_word = (TextView) findViewById(R.id.tv_word);
-        et_textEnter = (EditText) findViewById(R.id.et_textEnter);
-        tv_word.setText(anagram(wordlist).toLowerCase());
+        Log.d("step", "1");
+        // et_textEnter = (EditText) findViewById(R.id.et_textEnter);
 
+        Log.d("step", "7");
         View.OnClickListener radioListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,25 +89,28 @@ public class MainActivity extends Activity {
                     default:
                         break;
                 }
-                switch (v.getId()) {
-                    case R.id.bt_enter:
-                        Enter();
-                        break;
-                }
             }
         };
+        Log.d("step", "6");
+        bt_enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Enter();
+            }
+        });
+        Log.d("step", "5");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    } //Создание меню
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {                                                                 // Handle item selection
+        switch (item.getItemId()) {
 
             case R.id.menu_help:
                 Intent int_help = new Intent(this, Help.class);
@@ -121,7 +126,7 @@ public class MainActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    } //Слушатель итемов меню
 
     private void Enter(){
         if(wordlist[select].toLowerCase().equals(et_textEnter.getText().toString().toLowerCase())){
@@ -150,10 +155,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        //wordlist = Prefs.loadWordlist(getApplicationContext());
-        tv_points = (TextView) findViewById(R.id.tv_points);
+
         points = Prefs.loadScore(getApplicationContext());
+        Log.d("step", "2");
         tv_points.setText(points + "");
+        Log.d("step", "3");
+        tv_word.setText(anagram(wordlist).toLowerCase());
+        Log.d("step", "4");
     } //Загрузка
 
 }
